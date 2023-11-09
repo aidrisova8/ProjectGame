@@ -1,3 +1,54 @@
-body{
-    background-color: rgb(107, 213, 179);
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;500;600;800&family=VT323&display=swap");
+
+body {
+  margin: 0;
+  font-family: "Poppins";
+  height: 100vh;
 }
+
+ul,
+li {
+  padding: 0;
+  list-style-type: none;
+}
+
+.container{
+    display: grid;
+    grid-template-columns: 1f 3fr 1fr;
+    gap: 40px;  
+ 
+}
+header {
+    grid-column: span 3;
+    text-align: center;
+
+  }
+.main{
+   display: grid; 
+   grid-template-columns:repeat(15,40px);
+   grid-template-rows:repeat(15,40px);
+   width: 600px;
+   height: 600px;
+   border: 2px solid black;
+   
+}
+.box{
+    border: 0.5px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+ 
+  aside{
+    border: 2px solid black;
+  }
+  .main{
+
+    border: 2px solid black; 
+  }
+  footer{
+    grid-column: span 3;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+  }
