@@ -8,8 +8,9 @@ const random1=document.querySelector('.random1')
 const random2=document.querySelector('.random2')
 const timerEl=document.getElementById('timer')
 
-const color1="rgb(42, 158, 158)";
-const color2="rgb(190, 57, 57)";
+const color1="rgb(190, 57, 57)";
+const color2="rgb(42, 158, 158)";
+
 
 let mainState=true;
 let playButtonClicked=false;
@@ -71,3 +72,32 @@ function extractNumericValue(element){
     return Math.floor(Math.random() * (max - min + 1) + min)
   }
 
+
+  document.addEventListener("DOMContentLoaded", function () {
+    let isDragging = false;
+  
+    main.addEventListener("mouseover", mouseOver);
+    main.addEventListener("mousedown", mouseDown);
+  
+    function mouseOver(event) {
+      if (isDragging) {
+        const targetBox = event.target;
+        if (targetBox.classList.contains("box") && headerText.textContent=='Player #1 starts! Click play button!') {
+          targetBox.style.backgroundColor = color1;  
+        }else if(targetBox.classList.contains("box") && headerText.textContent=='Player #2 starts! Click play button!'){
+            targetBox.style.backgroundColor = color2;  
+        }
+      }
+    }
+  
+    function mouseDown() {
+      isDragging = true;
+      document.addEventListener("mouseup", mouseUp);
+    }
+  
+    function mouseUp() {
+      isDragging = false;
+      document.removeEventListener("mouseup", mouseUp);
+  
+      }
+  });
