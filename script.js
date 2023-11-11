@@ -12,7 +12,6 @@ const color1="rgb(190, 57, 57)";
 const color2="rgb(42, 158, 158)";
 
 
-let mainState=true;
 let playButtonClicked=false;
 
 
@@ -42,6 +41,7 @@ aside2.addEventListener('click',function(evt){
 })
 
 function timerCountDown(timerElement){
+  const storedMouseOver = mouseOver;
    let count=extractNumericValue(timerElement);
     const setTimer=setInterval(function(){
         if(count<=0){
@@ -50,16 +50,14 @@ function timerCountDown(timerElement){
             playButtonClicked = false;
       random1.classList.remove('clicked');
       random2.classList.remove('clicked');
-        }else{
+      main.removeEventListener('mouseover', storedMouseOver);
+             }else{
             timerElement.innerText=count+ " seconds"
         }
         count--;
     },1000);
 }
 
-main.addEventListener('mouseover',function(evt){
-    
-})
 
 function extractNumericValue(element){
     let textContent=element.innerText || element.textContent;
@@ -73,7 +71,7 @@ function extractNumericValue(element){
   }
 
 
-  document.addEventListener("DOMContentLoaded", function () {
+ 
     let isDragging = false;
   
     main.addEventListener("mouseover", mouseOver);
@@ -100,4 +98,4 @@ function extractNumericValue(element){
       document.removeEventListener("mouseup", mouseUp);
   
       }
-  });
+  
