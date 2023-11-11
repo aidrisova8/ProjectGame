@@ -27,15 +27,35 @@ console.dir(boxes)
  }
  })
 
+ const playCombination = [
+  [1,1],
+  [[1,2],[2,1]],
+  [[1,3],[3,1]],
+  [[1,4],[4,1]],
+  [2,2],
+  [[2,3],[3,2]],
+  [[2,4],[4,2]],
+  [3,3],
+  [[3,4],[4,3]],
+  [4,4]
+];
+
+const randomArr=[];
+
+
+
+
 aside2.addEventListener('click',function(evt){
     if(evt.target.classList.contains('play')){
         if(!playButtonClicked){
-     random1.innerText=randomIntFromInterval(1,4);
-     random2.innerText=randomIntFromInterval(1,4);
+   randomArr[0] = random1.innerText=randomIntFromInterval(1,4);
+   randomArr[1]=  random2.innerText=randomIntFromInterval(1,4);
      random1.classList.add('clicked')
      random2.classList.add('clicked')
      playButtonClicked=true;
      timerCountDown(timerEl);
+
+     console.log(randomArr)
     }
 }
 })
