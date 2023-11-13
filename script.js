@@ -12,14 +12,15 @@ const color1="rgb(190, 57, 57)";
 const color2="rgb(42, 158, 158)";
 
 
-let playButtonClicked=false;
 
 
+//start & reset buttons
  footer.addEventListener('click', function(evt){
  console.dir(evt.target)
  if(evt.target.classList.contains('start')){
-    let player=randomIntFromInterval(1,2);
-    headerText.innerText=`Player #${player} starts! Click play button!`
+    let player1=`Player #1 starts! Click play button!`
+    let player2=`Player #2 starts! Click play button!`
+    headerText.innerText=player1;
 console.log(headerText)
  }else if(evt.target.classList.contains('reset')){
 console.dir(boxes)
@@ -27,24 +28,25 @@ console.dir(boxes)
  }
  })
 
- const playCombination = [
-  [1,1],
-  [[1,2],[2,1]],
-  [[1,3],[3,1]],
-  [[1,4],[4,1]],
-  [2,2],
-  [[2,3],[3,2]],
-  [[2,4],[4,2]],
-  [3,3],
-  [[3,4],[4,3]],
-  [4,4]
-];
+//  const playCombination = [
+//   [1,1],
+//   [[1,2],[2,1]],
+//   [[1,3],[3,1]],
+//   [[1,4],[4,1]],
+//   [2,2],
+//   [[2,3],[3,2]],
+//   [[2,4],[4,2]],
+//   [3,3],
+//   [[3,4],[4,3]],
+//   [4,4]
+// ];
 
 const randomArr=[];
 
 
 
-
+//play button 
+let playButtonClicked=false;
 aside2.addEventListener('click',function(evt){
     if(evt.target.classList.contains('play')){
         if(!playButtonClicked){
@@ -56,10 +58,12 @@ aside2.addEventListener('click',function(evt){
      timerCountDown(timerEl);
 
      console.log(randomArr)
+     console.log(nubmerOfColoredDivs(randomArr));
     }
 }
 })
 
+//timer count
 function timerCountDown(timerElement){
   const storedMouseOver = mouseOver;
    let count=extractNumericValue(timerElement);
@@ -90,6 +94,47 @@ function extractNumericValue(element){
     return Math.floor(Math.random() * (max - min + 1) + min)
   }
 
+// main div color function
+
+function arraysAreEqual(arr1, arr2) {
+  if (arr1.length !== arr2.length) {
+    return false;
+  }
+  for (let i = 0; i < arr1.length; i++) {
+    if (arr1[i] !== arr2[i]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function nubmerOfColoredDivs(array) {
+  let num = 0;
+
+  if (arraysAreEqual(array, [1, 1])) {
+    num = 1;
+  } else if (arraysAreEqual(array, [1, 2]) || arraysAreEqual(array, [2, 1])) {
+    num = 2;
+  } else if (arraysAreEqual(array, [1, 3]) || arraysAreEqual(array, [3, 1])) {
+    num = 3;
+  } else if (arraysAreEqual(array, [1, 4]) || arraysAreEqual(array, [4, 1])|| arraysAreEqual(array, [2, 2])) {
+    num = 4;
+  } else if (arraysAreEqual(array, [2, 3]) || arraysAreEqual(array, [3, 2])) {
+    num = 6;
+  } else if (arraysAreEqual(array, [2, 4]) || arraysAreEqual(array, [4, 2])) {
+    num = 8;
+  }else if (arraysAreEqual(array, [3, 3])) {
+    num = 9;
+  }else if (arraysAreEqual(array, [3, 4]) || arraysAreEqual(array, [4, 3])) {
+    num = 12;
+  }else if (arraysAreEqual(array, [4,4])) {
+    num = 16;
+  }
+   
+
+  return num;
+}
+
 
  
     let isDragging = false;
@@ -98,7 +143,7 @@ function extractNumericValue(element){
     main.addEventListener("mousedown", mouseDown);
   
     function mouseOver(event) {
-      if (isDragging) {
+      if (isDragging && playButtonClicked) {
         const targetBox = event.target;
         if (targetBox.classList.contains("box") && headerText.textContent=='Player #1 starts! Click play button!') {
           targetBox.style.backgroundColor = color1;  
