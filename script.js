@@ -7,7 +7,8 @@ const aside2=document.querySelector('.aside2')
 const random1=document.querySelector('.random1')
 const random2=document.querySelector('.random2')
 const timerEl=document.getElementById('timer')
-
+const score1Div=document.querySelector('.score1')
+const score2Div=document.querySelector('.score2')
 const color1="red";
 const color2="blue";
 
@@ -15,12 +16,15 @@ const color2="blue";
 
 
 //start & reset buttons
+let player1Turn=false;
+let player2Turn=false;
  footer.addEventListener('click', function(evt){
  console.dir(evt.target)
  if(evt.target.classList.contains('start')){
     let player1=`Player #1 starts! Click play button!`
     let player2=`Player #2 starts! Click play button!`
     headerText.innerText=player1;
+    player1Turn=true;
 console.log(headerText)
  }else if(evt.target.classList.contains('reset')){
 console.dir(boxes)
@@ -63,7 +67,11 @@ aside2.addEventListener('click',function(evt){
 }
 })
 
+
+
 //timer count
+
+
 function timerCountDown(timerElement){
   const storedMouseOver = mouseOver;
    let count=extractNumericValue(timerElement);
@@ -93,6 +101,20 @@ function extractNumericValue(element){
  function randomIntFromInterval(min, max) { 
     return Math.floor(Math.random() * (max - min + 1) + min)
   }
+
+ //score feature
+
+//  let score1Count=0;
+//  let score2Count=0;
+
+//  if(player1Turn && nubmerOfColoredDivs(randomArr)==coloredDivsCount.color1Count){
+//   console.log('add score 1')
+//   score1Count++
+// score1Div.innerText=score1Count;
+//  }else if(player2Turn && nubmerOfColoredDivs(randomArr)==coloredDivsCount.color2Count){
+//   console.log('add score 2')
+//  }
+
 
 // main div color function
 let coloredDivsCount={
@@ -134,7 +156,7 @@ function nubmerOfColoredDivs(array) {
   }else if (arraysAreEqual(array, [4,4])) {
     num = 16;
   }
-   
+   console.log(num)
 
   return num;
 }
@@ -177,16 +199,15 @@ function nubmerOfColoredDivs(array) {
 
       function checkBoxesColor(){
         boxes.forEach(box=>{
-          const currentColor=window.getComputedStyle(box).backgroundColor;
+          const currentColor=box.style.backgroundColor;
           if(currentColor===color1){
+          
             coloredDivsCount.color1Count++;
+            console.log(coloredDivsCount)
           }else if(currentColor===color2){
             coloredDivsCount.color2Count++;
           }
         })
       } 
 
-      //score feature
-
-   let score1Count=0;
-   let score2Count=0;
+     

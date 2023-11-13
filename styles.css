@@ -22,6 +22,11 @@ header {
     grid-column: span 3;
     text-align: center;
   }
+  .header > div {
+
+display: flex;
+justify-content: center;
+  }
    
 .main{
    display: grid; 
@@ -62,7 +67,7 @@ header {
     margin-bottom: 66px;
   }
 
-  .score>div, #timer{
+  .score>div{
     height: 50px;
     width: 150px;
     border: 1px solid black;
@@ -84,4 +89,6 @@ header {
     height: 50px;
     width: 150px;
   }
-  
+  .hbox{
+    padding: 20px;
+  }
