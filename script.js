@@ -11,7 +11,8 @@ const score1Div=document.querySelector('.score1')
 const score2Div=document.querySelector('.score2')
 const color1="red";
 const color2="blue";
-
+const initialTimerValue=10
+timerEl.innerText=initialTimerValue+ " seconds";
 
 
 
@@ -20,12 +21,13 @@ let player1Turn=false;
 let player2Turn=false;
 let startButtonClicked=false;
 
+
  footer.addEventListener('click', function(evt){
  console.dir(evt.target)
  if(evt.target.classList.contains('start')){
-    let player1=`Player #1 starts! Click play button!`
-    let player2=`Player #2 starts! Click play button!`
-    headerText.innerText=player1;
+    // let player1=`Player #1's turn!`
+    // headerText.innerText=player1;
+    switchPlayers()
     if(!startButtonClicked){
          randomArr[0] = random1.innerText=randomIntFromInterval(1,4);
          randomArr[1]=  random2.innerText=randomIntFromInterval(1,4);
@@ -46,6 +48,19 @@ console.dir(boxes)
  }
  })
 
+ function switchPlayers() {
+  player1Turn = !player1Turn;
+  player2Turn = !player2Turn;
+  if (player1Turn) {
+      headerText.innerText = "Player #1's turn!";
+      timerCountDown(timerEl)
+  } else {
+      headerText.innerText = "Player #2's turn!";
+      timerCountDown(timerEl)
+  }
+  main.addEventListener("mouseover", mouseOver);
+}
+
 //  const playCombination = [
 //   [1,1],
 //   [[1,2],[2,1]],
@@ -62,8 +77,11 @@ console.dir(boxes)
 const randomArr=[];
 
 //timer count
+
+
+
 let storedMouseOver;
-let finishedState=false;
+
 function timerCountDown(timerElement){
    storedMouseOver = mouseOver;
    let count=extractNumericValue(timerElement);
@@ -71,7 +89,6 @@ function timerCountDown(timerElement){
         if(count<=0){
             clearInterval(setTimer);
             timerElement.innerText='Finished';  
-            finishedState=true; 
             startButtonClicked = false;
       random1.classList.remove('clicked');
       random2.classList.remove('clicked');
@@ -172,7 +189,7 @@ let score1Count=0;
     function mouseOver(event) {
       if (isDragging && startButtonClicked) {
         const targetBox = event.target;
-        if (targetBox.classList.contains("box") && headerText.textContent=='Player #1 starts! Click play button!') {
+        if ((targetBox.classList.contains("box") && headerText.textContent=='Player #1\'s turn!')) {
           targetBox.style.backgroundColor = color1;  
    const counts= checkBoxesColor()
        actualColor1Count=counts.color1Count;
@@ -185,7 +202,7 @@ let score1Count=0;
         }
            
            
-        }else if(targetBox.classList.contains("box") && headerText.textContent=='Player #2 starts! Click play button!'){
+        }else if(targetBox.classList.contains("box") && headerText.textContent=='Player #2\'s turn!'){
             targetBox.style.backgroundColor = color2; 
             const counts= checkBoxesColor()
             actualColor2Count=counts.color2Count;
@@ -195,6 +212,8 @@ let score1Count=0;
                 score2Count++
                 score2Div.innerText=score2Count;
                 main.removeEventListener('mouseover', storedMouseOver);
+                timerEl.innerText=initialTimerValue;
+               
                }   
                 
         }
