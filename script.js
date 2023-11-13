@@ -8,8 +8,8 @@ const random1=document.querySelector('.random1')
 const random2=document.querySelector('.random2')
 const timerEl=document.getElementById('timer')
 
-const color1="rgb(190, 57, 57)";
-const color2="rgb(42, 158, 158)";
+const color1="red";
+const color2="blue";
 
 
 
@@ -95,6 +95,10 @@ function extractNumericValue(element){
   }
 
 // main div color function
+let coloredDivsCount={
+  color1Count:0,
+  color2Count:0
+}
 
 function arraysAreEqual(arr1, arr2) {
   if (arr1.length !== arr2.length) {
@@ -147,8 +151,11 @@ function nubmerOfColoredDivs(array) {
         const targetBox = event.target;
         if (targetBox.classList.contains("box") && headerText.textContent=='Player #1 starts! Click play button!') {
           targetBox.style.backgroundColor = color1;  
+          checkBoxesColor()
+          console.log(coloredDivsCount.color1Count)
         }else if(targetBox.classList.contains("box") && headerText.textContent=='Player #2 starts! Click play button!'){
-            targetBox.style.backgroundColor = color2;  
+            targetBox.style.backgroundColor = color2; 
+            checkBoxesColor()
         }
       }
     }
@@ -164,3 +171,22 @@ function nubmerOfColoredDivs(array) {
   
       }
   
+      // Function to check the current color of each box
+
+      
+
+      function checkBoxesColor(){
+        boxes.forEach(box=>{
+          const currentColor=window.getComputedStyle(box).backgroundColor;
+          if(currentColor===color1){
+            coloredDivsCount.color1Count++;
+          }else if(currentColor===color2){
+            coloredDivsCount.color2Count++;
+          }
+        })
+      } 
+
+      //score feature
+
+   let score1Count=0;
+   let score2Count=0;
