@@ -61,38 +61,17 @@ console.dir(boxes)
 
 const randomArr=[];
 
-
-
-// //play button 
-// let playButtonClicked=false;
-// aside2.addEventListener('click',function(evt){
-//     if(evt.target.classList.contains('play')){
-//         if(!playButtonClicked){
-//    randomArr[0] = random1.innerText=randomIntFromInterval(1,4);
-//    randomArr[1]=  random2.innerText=randomIntFromInterval(1,4);
-//      random1.classList.add('clicked')
-//      random2.classList.add('clicked')
-//      playButtonClicked=true;
-//      timerCountDown(timerEl);
-
-//      console.log(randomArr)
-//      console.log(nubmerOfColoredDivs(randomArr));
-//     }
-// }
-// })
-
-
-
 //timer count
-
-
+let storedMouseOver;
+let finishedState=false;
 function timerCountDown(timerElement){
-  const storedMouseOver = mouseOver;
+   storedMouseOver = mouseOver;
    let count=extractNumericValue(timerElement);
     const setTimer=setInterval(function(){
         if(count<=0){
             clearInterval(setTimer);
-            timerElement.innerText='Finished';   
+            timerElement.innerText='Finished';  
+            finishedState=true; 
             startButtonClicked = false;
       random1.classList.remove('clicked');
       random2.classList.remove('clicked');
@@ -116,20 +95,7 @@ function extractNumericValue(element){
     return Math.floor(Math.random() * (max - min + 1) + min)
   }
 
- //score feature
-
- let score1Count=0;
- let score2Count=0;
-
- if(player1Turn && expectedColoredDivsNum(randomArr)==coloredDivsCount.color1Count){
-  console.log('add score 1')
-  score1Count++
-score1Div.innerText=score1Count;
- }else if(player2Turn && expectedColoredDivsNum(randomArr)==coloredDivsCount.color2Count){
-  console.log('add score 2')
-  score2Count++
-  score2Div.innerText=score2Count;
- }
+ 
 
 
 
@@ -195,6 +161,8 @@ function expectedColoredDivsNum(array) {
 
 let actualColor1Count=0;  
 let actualColor2Count=0;
+let score1Count=0;
+ let score2Count=0;
  
     let isDragging = false;
   // main div color function
@@ -208,12 +176,27 @@ let actualColor2Count=0;
           targetBox.style.backgroundColor = color1;  
    const counts= checkBoxesColor()
        actualColor1Count=counts.color1Count;
-          console.log('actual amount of divs'+actualColor1Count)
+          console.log('actual amount of divs color1 '+actualColor1Count)
+          if(player1Turn && expectedColoredDivsNum(randomArr)==actualColor1Count){
+            console.log('add score 1' +actualColor1Count)
+            score1Count++
+          score1Div.innerText=score1Count;
+          main.removeEventListener('mouseover', storedMouseOver);
+        }
+           
            
         }else if(targetBox.classList.contains("box") && headerText.textContent=='Player #2 starts! Click play button!'){
             targetBox.style.backgroundColor = color2; 
-          // checkBoxesColor()
-          // actualColor2Count=coloredDivsCount.color2Count;
+            const counts= checkBoxesColor()
+            actualColor2Count=counts.color2Count;
+               console.log('actual amount of divs color2 '+actualColor2Count)
+               if(player2Turn && expectedColoredDivsNum(randomArr)==actualColor2Count){
+                console.log('add score 2')
+                score2Count++
+                score2Div.innerText=score2Count;
+                main.removeEventListener('mouseover', storedMouseOver);
+               }   
+                
         }
       }
     }
@@ -229,6 +212,9 @@ let actualColor2Count=0;
   
       }
   
-      
+ 
+
+ 
+  
 
      
