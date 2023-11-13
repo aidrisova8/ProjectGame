@@ -18,12 +18,26 @@ const color2="blue";
 //start & reset buttons
 let player1Turn=false;
 let player2Turn=false;
+let startButtonClicked=false;
+
  footer.addEventListener('click', function(evt){
  console.dir(evt.target)
  if(evt.target.classList.contains('start')){
     let player1=`Player #1 starts! Click play button!`
     let player2=`Player #2 starts! Click play button!`
     headerText.innerText=player1;
+    if(!startButtonClicked){
+         randomArr[0] = random1.innerText=randomIntFromInterval(1,4);
+         randomArr[1]=  random2.innerText=randomIntFromInterval(1,4);
+           random1.classList.add('clicked')
+           random2.classList.add('clicked')
+           startButtonClicked=true;
+           timerCountDown(timerEl);
+      
+           console.log(randomArr)
+           console.log('expected amount of colored divs '+expectedColoredDivsNum(randomArr));
+          }
+      
     player1Turn=true;
 console.log(headerText)
  }else if(evt.target.classList.contains('reset')){
@@ -49,23 +63,23 @@ const randomArr=[];
 
 
 
-//play button 
-let playButtonClicked=false;
-aside2.addEventListener('click',function(evt){
-    if(evt.target.classList.contains('play')){
-        if(!playButtonClicked){
-   randomArr[0] = random1.innerText=randomIntFromInterval(1,4);
-   randomArr[1]=  random2.innerText=randomIntFromInterval(1,4);
-     random1.classList.add('clicked')
-     random2.classList.add('clicked')
-     playButtonClicked=true;
-     timerCountDown(timerEl);
+// //play button 
+// let playButtonClicked=false;
+// aside2.addEventListener('click',function(evt){
+//     if(evt.target.classList.contains('play')){
+//         if(!playButtonClicked){
+//    randomArr[0] = random1.innerText=randomIntFromInterval(1,4);
+//    randomArr[1]=  random2.innerText=randomIntFromInterval(1,4);
+//      random1.classList.add('clicked')
+//      random2.classList.add('clicked')
+//      playButtonClicked=true;
+//      timerCountDown(timerEl);
 
-     console.log(randomArr)
-     console.log(nubmerOfColoredDivs(randomArr));
-    }
-}
-})
+//      console.log(randomArr)
+//      console.log(nubmerOfColoredDivs(randomArr));
+//     }
+// }
+// })
 
 
 
@@ -79,7 +93,7 @@ function timerCountDown(timerElement){
         if(count<=0){
             clearInterval(setTimer);
             timerElement.innerText='Finished';   
-            playButtonClicked = false;
+            startButtonClicked = false;
       random1.classList.remove('clicked');
       random2.classList.remove('clicked');
       main.removeEventListener('mouseover', storedMouseOver);
@@ -104,23 +118,43 @@ function extractNumericValue(element){
 
  //score feature
 
-//  let score1Count=0;
-//  let score2Count=0;
+ let score1Count=0;
+ let score2Count=0;
 
-//  if(player1Turn && nubmerOfColoredDivs(randomArr)==coloredDivsCount.color1Count){
-//   console.log('add score 1')
-//   score1Count++
-// score1Div.innerText=score1Count;
-//  }else if(player2Turn && nubmerOfColoredDivs(randomArr)==coloredDivsCount.color2Count){
-//   console.log('add score 2')
-//  }
+ if(player1Turn && expectedColoredDivsNum(randomArr)==coloredDivsCount.color1Count){
+  console.log('add score 1')
+  score1Count++
+score1Div.innerText=score1Count;
+ }else if(player2Turn && expectedColoredDivsNum(randomArr)==coloredDivsCount.color2Count){
+  console.log('add score 2')
+  score2Count++
+  score2Div.innerText=score2Count;
+ }
 
 
-// main div color function
-let coloredDivsCount={
-  color1Count:0,
-  color2Count:0
-}
+
+
+
+// Function to check the current color of each box
+
+// let coloredDivsCount={
+//   color1Count:0,
+//   color2Count:0
+// }
+
+function checkBoxesColor(){
+  let  color1Count=0;
+ let color2Count=0;
+  boxes.forEach(box=>{
+    const currentColor=box.style.backgroundColor;
+    if(currentColor==color1){  
+      color1Count++;      
+    }else if(currentColor==color2){
+      color2Count++;
+    }
+  });
+  return {color1Count,color2Count}
+} 
 
 function arraysAreEqual(arr1, arr2) {
   if (arr1.length !== arr2.length) {
@@ -134,7 +168,7 @@ function arraysAreEqual(arr1, arr2) {
   return true;
 }
 
-function nubmerOfColoredDivs(array) {
+function expectedColoredDivsNum(array) {
   let num = 0;
 
   if (arraysAreEqual(array, [1, 1])) {
@@ -156,28 +190,30 @@ function nubmerOfColoredDivs(array) {
   }else if (arraysAreEqual(array, [4,4])) {
     num = 16;
   }
-   console.log(num)
-
   return num;
 }
 
-
+let actualColor1Count=0;  
+let actualColor2Count=0;
  
     let isDragging = false;
-  
+  // main div color function
     main.addEventListener("mouseover", mouseOver);
     main.addEventListener("mousedown", mouseDown);
   
     function mouseOver(event) {
-      if (isDragging && playButtonClicked) {
+      if (isDragging && startButtonClicked) {
         const targetBox = event.target;
         if (targetBox.classList.contains("box") && headerText.textContent=='Player #1 starts! Click play button!') {
           targetBox.style.backgroundColor = color1;  
-          checkBoxesColor()
-          console.log(coloredDivsCount.color1Count)
+   const counts= checkBoxesColor()
+       actualColor1Count=counts.color1Count;
+          console.log('actual amount of divs'+actualColor1Count)
+           
         }else if(targetBox.classList.contains("box") && headerText.textContent=='Player #2 starts! Click play button!'){
             targetBox.style.backgroundColor = color2; 
-            checkBoxesColor()
+          // checkBoxesColor()
+          // actualColor2Count=coloredDivsCount.color2Count;
         }
       }
     }
@@ -193,21 +229,6 @@ function nubmerOfColoredDivs(array) {
   
       }
   
-      // Function to check the current color of each box
-
       
-
-      function checkBoxesColor(){
-        boxes.forEach(box=>{
-          const currentColor=box.style.backgroundColor;
-          if(currentColor===color1){
-          
-            coloredDivsCount.color1Count++;
-            console.log(coloredDivsCount)
-          }else if(currentColor===color2){
-            coloredDivsCount.color2Count++;
-          }
-        })
-      } 
 
      
