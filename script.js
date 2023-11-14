@@ -1,4 +1,4 @@
-const footer=document.querySelector('footer');
+const reset=document.querySelector('.reset');
 const start=document.querySelector('.start')
 const headerText=document.querySelector('h1')
 const main=document.querySelector('main')
@@ -22,9 +22,8 @@ let player2Turn=false;
 let startButtonClicked=false;
 
 
- footer.addEventListener('click', function(evt){
+ start.addEventListener('click', function(evt){
  console.dir(evt.target)
- if(evt.target.classList.contains('start')){
     let player1=`Player #1's turn!`
     headerText.innerText=player1;
     if(!startButtonClicked){
@@ -41,10 +40,6 @@ let startButtonClicked=false;
       
     player1Turn=true;
 console.log(headerText)
- }else if(evt.target.classList.contains('reset')){
-console.dir(boxes)
- // there should be a code to clear from color
- }
  })
 
  function switchPlayers() {
@@ -81,14 +76,13 @@ const randomArr=[];
 
 //timer count
 
-
+let setTimer
 
 let storedMouseOver;
-
 function timerCountDown(timerElement){
    storedMouseOver = mouseOver;
    let count=10;
-    const setTimer=setInterval(function(){
+   setTimer=setInterval(function(){
         if(count<=0){
             clearInterval(setTimer);
             timerElement.innerText='Finished';  
@@ -101,6 +95,7 @@ function timerCountDown(timerElement){
       randomArr[1]=  random2.innerText=randomIntFromInterval(1,4);
              }else{
             timerElement.innerText=count+ " seconds"
+            isTimer=true
         }
         count--;
     },1000);
@@ -181,8 +176,8 @@ function expectedColoredDivsNum(array) {
 
 let actualColor1Count=0;  
 let actualColor2Count=0;
-let score1Count=0;
- let score2Count=0;
+let expectedColor1Count=0;  
+let expectedColor2Count=0;
  
     let isDragging = false;
   // main div color function
@@ -192,31 +187,27 @@ let score1Count=0;
     function mouseOver(event) {
       if (isDragging) {
         const targetBox = event.target;
-        if ((targetBox.classList.contains("box") && headerText.textContent=='Player #1\'s turn!')) {
+        if ((targetBox.classList.contains("box") && headerText.textContent=='Player #1\'s turn!' && player1Turn)) {
           targetBox.style.backgroundColor = color1;  
    const counts= checkBoxesColor()
        actualColor1Count=counts.color1Count;
-          console.log('actual amount of divs color1 '+actualColor1Count)
-           if(player1Turn && expectedColoredDivsNum(randomArr)==actualColor1Count){
-            // console.log('add score 1' +actualColor1Count)
-          //   // score1Count++
-          // score1Div.innerText=score1Count;
+       expectedColor1Count=expectedColoredDivsNum(randomArr)
+          console.log('actualcolor1 '+actualColor1Count)
+          console.log('expectedcolor1 '+expectedColor1Count)
+           if(expectedColor1Count==actualColor1Count){
           main.removeEventListener('mouseover', storedMouseOver);
         }
            
            
-        }else if(targetBox.classList.contains("box") && headerText.textContent=='Player #2\'s turn!'){
+        }else if(targetBox.classList.contains("box") && headerText.textContent=='Player #2\'s turn!' && player2Turn){
             targetBox.style.backgroundColor = color2; 
             const counts= checkBoxesColor()
             actualColor2Count=counts.color2Count;
-               console.log('actual amount of divs color2 '+actualColor2Count)
-               if(player2Turn && expectedColoredDivsNum(randomArr)==actualColor2Count){
-                
-                // score2Count++
-                // score2Div.innerText=score2Count;
+            expectedColor2Count=expectedColoredDivsNum(randomArr)
+          console.log('actualcolor2 '+actualColor2Count)
+          console.log('expectedcolor2 '+expectedColor2Count)
+               if(expectedColor2Count==actualColor2Count){
                main.removeEventListener('mouseover', storedMouseOver);
-                // timerEl.innerText=initialTimerValue;
-               
                }   
                 
         }
@@ -235,6 +226,29 @@ let score1Count=0;
       }
   
  
+ reset.addEventListener('click', function(event){
+  boxes.forEach(box=>{
+  box.style.backgroundColor='#f3efef'})
+  random1.innerHTML=''
+  random2.innerHTML=''
+  player1Turn = false;
+  player2Turn = false;
+  headerText.innerText="ZARUBA GAME"
+  main.classList.remove('clicked');
+  startButtonClicked = false;
+  main.removeEventListener('mouseover', storedMouseOver);
+  actualColor1Count = 0;
+  actualColor2Count = 0;
+  isDragging = true;
+  timerEl.innerText = ''
+  clearInterval(setTimer)
+  main.addEventListener('mouseover', mouseOver);
+ })
+ 
+  
+
+     
+ 
 
  
   
@@ -242,6 +256,16 @@ let score1Count=0;
      
  
 
+ 
+  
+
+     
+ 
+
+ 
+  
+
+     
  
   
 
