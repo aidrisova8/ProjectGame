@@ -11,8 +11,8 @@ const score1Div=document.querySelector('.score1')
 const score2Div=document.querySelector('.score2')
 const color1="red";
 const color2="blue";
-const initialTimerValue=10
-timerEl.innerText=initialTimerValue+ " seconds";
+// const initialTimerValue=10
+// timerEl.innerText=initialTimerValue+ " seconds";
 
 
 
@@ -25,9 +25,8 @@ let startButtonClicked=false;
  footer.addEventListener('click', function(evt){
  console.dir(evt.target)
  if(evt.target.classList.contains('start')){
-    // let player1=`Player #1's turn!`
-    // headerText.innerText=player1;
-    switchPlayers()
+    let player1=`Player #1's turn!`
+    headerText.innerText=player1;
     if(!startButtonClicked){
          randomArr[0] = random1.innerText=randomIntFromInterval(1,4);
          randomArr[1]=  random2.innerText=randomIntFromInterval(1,4);
@@ -54,11 +53,13 @@ console.dir(boxes)
   if (player1Turn) {
       headerText.innerText = "Player #1's turn!";
       timerCountDown(timerEl)
+  main.addEventListener("mouseover", mouseOver);
   } else {
       headerText.innerText = "Player #2's turn!";
       timerCountDown(timerEl)
+      main.addEventListener("mouseover", mouseOver);
   }
-  main.addEventListener("mouseover", mouseOver);
+ 
 }
 
 //  const playCombination = [
@@ -84,7 +85,7 @@ let storedMouseOver;
 
 function timerCountDown(timerElement){
    storedMouseOver = mouseOver;
-   let count=extractNumericValue(timerElement);
+   let count=11;
     const setTimer=setInterval(function(){
         if(count<=0){
             clearInterval(setTimer);
@@ -93,6 +94,7 @@ function timerCountDown(timerElement){
       random1.classList.remove('clicked');
       random2.classList.remove('clicked');
       main.removeEventListener('mouseover', storedMouseOver);
+      switchPlayers();
              }else{
             timerElement.innerText=count+ " seconds"
         }
@@ -120,10 +122,7 @@ function extractNumericValue(element){
 
 // Function to check the current color of each box
 
-// let coloredDivsCount={
-//   color1Count:0,
-//   color2Count:0
-// }
+
 
 function checkBoxesColor(){
   let  color1Count=0;
@@ -194,10 +193,10 @@ let score1Count=0;
    const counts= checkBoxesColor()
        actualColor1Count=counts.color1Count;
           console.log('actual amount of divs color1 '+actualColor1Count)
-          if(player1Turn && expectedColoredDivsNum(randomArr)==actualColor1Count){
-            console.log('add score 1' +actualColor1Count)
-            score1Count++
-          score1Div.innerText=score1Count;
+           if(player1Turn && expectedColoredDivsNum(randomArr)==actualColor1Count){
+            // console.log('add score 1' +actualColor1Count)
+          //   // score1Count++
+          // score1Div.innerText=score1Count;
           main.removeEventListener('mouseover', storedMouseOver);
         }
            
@@ -208,11 +207,11 @@ let score1Count=0;
             actualColor2Count=counts.color2Count;
                console.log('actual amount of divs color2 '+actualColor2Count)
                if(player2Turn && expectedColoredDivsNum(randomArr)==actualColor2Count){
-                console.log('add score 2')
-                score2Count++
-                score2Div.innerText=score2Count;
-                main.removeEventListener('mouseover', storedMouseOver);
-                timerEl.innerText=initialTimerValue;
+                
+                // score2Count++
+                // score2Div.innerText=score2Count;
+               main.removeEventListener('mouseover', storedMouseOver);
+                // timerEl.innerText=initialTimerValue;
                
                }   
                 
