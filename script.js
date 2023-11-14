@@ -1,4 +1,4 @@
- const footer=document.querySelector('footer');
+const footer=document.querySelector('footer');
 const start=document.querySelector('.start')
 const headerText=document.querySelector('h1')
 const main=document.querySelector('main')
@@ -48,18 +48,20 @@ console.dir(boxes)
  })
 
  function switchPlayers() {
-  player1Turn = !player1Turn;
-  player2Turn = !player2Turn;
-  if (player1Turn) {
+  if (timerEl.innerText === 'Finished') {
+    player1Turn = !player1Turn;
+    player2Turn = !player2Turn;
+
+    if (player1Turn) {
       headerText.innerText = "Player #1's turn!";
-      timerCountDown(timerEl)
-  main.addEventListener("mouseover", mouseOver);
-  } else {
-      headerText.innerText = "Player #2's turn!";
-      timerCountDown(timerEl)
+      timerCountDown(timerEl);
       main.addEventListener("mouseover", mouseOver);
+    } else {
+      headerText.innerText = "Player #2's turn!";
+      timerCountDown(timerEl);
+      main.addEventListener("mouseover", mouseOver);
+    }
   }
- 
 }
 
 //  const playCombination = [
@@ -85,7 +87,7 @@ let storedMouseOver;
 
 function timerCountDown(timerElement){
    storedMouseOver = mouseOver;
-   let count=11;
+   let count=10;
     const setTimer=setInterval(function(){
         if(count<=0){
             clearInterval(setTimer);
@@ -95,6 +97,8 @@ function timerCountDown(timerElement){
       random2.classList.remove('clicked');
       main.removeEventListener('mouseover', storedMouseOver);
       switchPlayers();
+      randomArr[0] = random1.innerText=randomIntFromInterval(1,4);
+      randomArr[1]=  random2.innerText=randomIntFromInterval(1,4);
              }else{
             timerElement.innerText=count+ " seconds"
         }
@@ -186,7 +190,7 @@ let score1Count=0;
     main.addEventListener("mousedown", mouseDown);
   
     function mouseOver(event) {
-      if (isDragging && startButtonClicked) {
+      if (isDragging) {
         const targetBox = event.target;
         if ((targetBox.classList.contains("box") && headerText.textContent=='Player #1\'s turn!')) {
           targetBox.style.backgroundColor = color1;  
@@ -230,6 +234,12 @@ let score1Count=0;
   
       }
   
+ 
+
+ 
+  
+
+     
  
 
  
