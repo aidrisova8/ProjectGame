@@ -12,21 +12,20 @@ const score1Div = document.querySelector(".score1");
 const score2Div = document.querySelector(".score2");
 const color1 = "red";
 const color2 = "blue";
-
-
-//start & reset buttons
 let player1Turn = false;
 let player2Turn = false;
 let startButtonClicked = false;
+let actualColor1Count = 0;
+let actualColor2Count = 0;
 
 // keep track of the random dimensions of box
 let numberOfBoxesOne, numberOfBoxesTwo, totalBoxesAllowed;
 
-footer.addEventListener("click", function (evt) {
+
+//start  button
+start.addEventListener("click", function (evt) {
 
   console.dir(evt.target);
-
-  if (evt.target.classList.contains("start")) {
 
     let player1 = `Player #1's turn!`;
     headerText.innerText = player1;
@@ -55,12 +54,6 @@ footer.addEventListener("click", function (evt) {
 
     player1Turn = true;
     console.log(headerText);
-
-  } else if (evt.target.classList.contains("reset")) {
-
-    console.dir(boxes);
-    // there should be a code to clear from color
-  }
 });
 
 function switchPlayers() {
@@ -91,7 +84,7 @@ function switchPlayers() {
 
 
 const randomArr = [];
-
+let setTimer;
 let storedMouseOver;
 
 function timerCountDown(timerElement) {
@@ -99,7 +92,7 @@ function timerCountDown(timerElement) {
   storedMouseOver = mouseOver;
   let count = 10;
 
-  const setTimer = setInterval(function () {
+   setTimer = setInterval(function () {
 
     if (count <= 0) {
 
@@ -138,10 +131,6 @@ function randomIntFromInterval(min, max) {
 
 
 
-let actualColor1Count = 0;
-let actualColor2Count = 0;
-let score1Count = 0;
-let score2Count = 0;
 
 let isDragging = false;
 // main div color function
@@ -187,7 +176,11 @@ function mouseUp() {
   isDragging = false;
   document.removeEventListener("mouseup", mouseUp);
 }
-  
+
+
+
+//reset button
+
 reset.addEventListener('click', function(event){
   boxes.forEach(box=>{
   box.style.backgroundColor='#f3efef'})
