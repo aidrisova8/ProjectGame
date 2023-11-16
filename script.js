@@ -63,23 +63,25 @@ setTimeout(function(){
     player1Turn = !player1Turn;
     player2Turn = !player2Turn;
 
-    actualColor1Count = 0
-    actualColor2Count = 0
+   
 
     if (player1Turn) {
-
+      winner()
       headerText.innerText = "Player #1's turn!";
       timerCountDown(timerEl);
       // main.addEventListener("mouseover", mouseOver);
-
+    
     } else {
-
+      winner()
       headerText.innerText = "Player #2's turn!";
       timerCountDown(timerEl);
       // main.addEventListener("mouseover", mouseOver);
-
+   
     }
+    actualColor1Count = 0
+    actualColor2Count = 0
   },1500)
+
   }
 }
 
@@ -152,8 +154,7 @@ console.log('mouse', isDragging, actualColor1Count, actualColor2Count, totalBoxe
       
       actualColor1Count++
 
-  
-console.log(actualColor1Count)
+      console.log('Actual Color 1 Count:', actualColor1Count);
  
     } else if (
       targetBox.classList.contains("box") &&
@@ -163,8 +164,8 @@ console.log(actualColor1Count)
       targetBox.style.backgroundColor = color2;
 
       actualColor2Count++
-      console.log(actualColor2Count)
-
+  
+      console.log('Actual Color 2 Count:', actualColor2Count);
     }
   }
 }
@@ -183,27 +184,39 @@ function mouseUp() {
 
 //reset button
 
-reset.addEventListener('click', function(event){
-  boxes.forEach(box=>{
-  box.style.backgroundColor='#f3efef'})
-  random1.innerHTML=''
-  random2.innerHTML=''
+reset.addEventListener('click', resetWithoutEvent) 
+
+
+ function resetWithoutEvent(event) {
+  boxes.forEach(box => {
+    box.style.backgroundColor = '#f3efef';
+  });
+  random1.innerHTML = '';
+  random2.innerHTML = '';
   player1Turn = false;
   player2Turn = false;
-  headerText.innerText="ZARUBA GAME"
+  headerText.innerText = "ZARUBA GAME";
   main.classList.remove('clicked');
   startButtonClicked = false;
   main.removeEventListener('mouseover', storedMouseOver);
   actualColor1Count = 0;
   actualColor2Count = 0;
   isDragging = true;
-  timerEl.innerText = ''
-  clearInterval(setTimer)
+  timerEl.innerText = '';
+  clearInterval(setTimer);
   main.addEventListener('mouseover', mouseOver);
- })
+}
      
  
-
+ function winner() {
+  if (headerText.innerText==`Player #1's turn!` && timerEl.innerText == "Finished" && actualColor1Count!=totalBoxesAllowed) {
+      alert("Player #1 lose!");
+    } else if (headerText.innerText==`Player #2's turn!` && timerEl.innerText == "Finished" &&  actualColor2Count!=totalBoxesAllowed ) {
+     console.log(actualColor2Count,totalBoxesAllowed)
+      alert("Player #2 lose!");
+   
+  }
+}
  
   
 
