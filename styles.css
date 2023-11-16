@@ -6,10 +6,9 @@ body {
   background: #f3efef;
 }
 
-ul,
 li {
   padding: 0;
-  list-style-type: none;
+  list-style-type: square;
 }
 
 .container{
