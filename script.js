@@ -59,7 +59,7 @@ start.addEventListener("click", function (evt) {
 function switchPlayers() {
 
   if (timerEl.innerText === "Finished") {
-
+setTimeout(function(){
     player1Turn = !player1Turn;
     player2Turn = !player2Turn;
 
@@ -79,6 +79,7 @@ function switchPlayers() {
       // main.addEventListener("mouseover", mouseOver);
 
     }
+  },1500)
   }
 }
 
@@ -98,6 +99,7 @@ function timerCountDown(timerElement) {
 
       clearInterval(setTimer);
       timerElement.innerText = "Finished";
+      timerElement.classList.add('finished')
       startButtonClicked = false;
 
       random1.classList.remove("clicked");
@@ -115,7 +117,7 @@ function timerCountDown(timerElement) {
       totalBoxesAllowed = numberOfBoxesOne * numberOfBoxesTwo
 
     } else {
-
+      timerElement.classList.remove('finished')
       timerElement.innerText = count + " seconds";
     }
 
