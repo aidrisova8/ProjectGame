@@ -56,6 +56,8 @@ start.addEventListener("click", function (evt) {
     console.log(headerText);
 });
 
+
+// switch players
 function switchPlayers() {
 
   if (timerEl.innerText === "Finished") {
@@ -69,14 +71,14 @@ setTimeout(function(){
       winner()
       headerText.innerText = "Player #1's turn!";
       timerCountDown(timerEl);
-      // main.addEventListener("mouseover", mouseOver);
+     
     
     } else {
       winner()
-      resetWithoutEvent()
+
       headerText.innerText = "Player #2's turn!";
       timerCountDown(timerEl);
-      // main.addEventListener("mouseover", mouseOver);
+      
    
     }
     numberOfBoxesOne = randomIntFromInterval(1, 4)
@@ -94,6 +96,8 @@ setTimeout(function(){
   }
 }
 
+
+// timer countdown
 
 const randomArr = [];
 let setTimer;
@@ -116,7 +120,7 @@ function timerCountDown(timerElement) {
       random1.classList.remove("clicked");
       random2.classList.remove("clicked");
 
-      // main.removeEventListener("mouseover", storedMouseOver);
+   
       switchPlayers();
 
       // numberOfBoxesOne = randomIntFromInterval(1, 4)
@@ -133,7 +137,7 @@ function timerCountDown(timerElement) {
     }
 
     count--;
-  }, 1000);
+  }, 1500);
 }
 
 
@@ -207,31 +211,31 @@ reset.addEventListener('click', resetWithoutEvent)
   player2Turn = false;
   main.classList.remove('clicked');
   startButtonClicked = false;
-  main.removeEventListener('mouseover', storedMouseOver);
   actualColor1Count = 0;
   actualColor2Count = 0;
-  isDragging = true;
+  isDragging = false;
   timerEl.innerText = '';
   clearInterval(setTimer);
-  main.addEventListener('mouseover', mouseOver);
+ // main.removeEventListener('mouseover', storedMouseOver);
+ // main.addEventListener('mouseover', mouseOver);
 }
      
  
  function winner() {
-  if (headerText.innerText==`Player #1's turn!` && timerEl.innerText == "Finished" && actualColor1Count!=totalBoxesAllowed) {
-    handleGameReset()
+  if (headerText.innerText==`Player #1's turn!` && timerEl.innerText == "Finished" && actualColor1Count!=totalBoxesAllowed) {  
     alert("Player #1 lose!");
-      
+    resetWithoutEvent(timerEl)
+    console.log("Reset worked");
+  
     } else if (headerText.innerText==`Player #2's turn!` && timerEl.innerText == "Finished" &&  actualColor2Count!=totalBoxesAllowed ) {
-     console.log(actualColor2Count,totalBoxesAllowed)
- handleGameReset()
+      console.log(actualColor2Count,totalBoxesAllowed)
      alert("Player #2 lose!");
+     resetWithoutEvent(timerEl)
+     console.log("Reset worked");
 
   }
 }
-function handleGameReset() {
-  resetWithoutEvent();
-}
+
   
 
      

@@ -23,6 +23,8 @@ h1{
 header {
     grid-column: span 3;
     text-align: center;
+    background-color: #3498db;
+    color: #fff;
   }
   .header > div {
 
@@ -62,10 +64,13 @@ justify-content: center;
   .random >div{
     height: 50px;
     width: 150px;
-    border: 1px solid black;
+    border: 2px solid black;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 25px;
+    font-size: 20px;
+    
   }
   .random1,
 .random2 {
@@ -76,11 +81,11 @@ justify-content: center;
 
 
 
-  .horizontal, .vertical{
+  /* .horizontal, .vertical{
     height: 50px;
     width: 150px;
     margin-right: 20px;
-  }
+  } */
   footer{
     grid-column: span 3;
     display: flex;
@@ -91,7 +96,11 @@ justify-content: center;
   .start, .reset{
     height: 50px;
     width: 150px;
-    font-size: 17px;
+    font-size: 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    background-color: #7fb8e0; 
+    transition: background-color 0.3s ease;
   }
   .hbox{
     padding-right: 20px;
